@@ -1,4 +1,4 @@
-# Frosty: Build a LLM Chatbot in Streamlit on your Snowflake Data
+# Chat with TEx - Gen Ai to retrieve data from Snowflake
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Snowflake-Labs/sfguide-frosty-llm-chatbot-on-streamlit-snowflake?quickstart=1)
 
