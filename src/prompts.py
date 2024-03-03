@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_pills import pills
 
 SCHEMA_PATH = st.secrets.get("SCHEMA_PATH", "EO_DATA.PUBLIC")
-QUALIFIED_TABLE_NAME = f"{SCHEMA_PATH}.EO_LAST_REPORTED"
+QUALIFIED_TABLE_NAME = f"{SCHEMA_PATH}.EO_DATA_VIEW"
 TABLE_DESCRIPTION = """
 This table has various metrics for excess inventory broken out by ODM, BU (Business Unit), and the INTEL_MONTH_YR.
 """
@@ -27,12 +27,14 @@ Here are critical rules for the interaction you must abide:
 ```sql
 (select 1) union (select 2)
 ```
-2. If I don't tell you to find a limited set of results in the sql query or question, you MUST limit the number of responses to 10.
+2. You should only use the table columns given in <columns>, and the table given in <tableName>, you MUST NOT hallucinate about the table or column names
+
 3. Text / string where clauses must be fuzzy match e.g ilike %keyword%
 4. Make sure to generate a single snowflake sql code, not multiple. 
 5. You should only use the table columns given in <columns>, and the table given in <tableName>, you MUST NOT hallucinate about the table or column names
 6. DO NOT put numerical at the very front of sql variable.
-7. DO NOT show any special characters or fonts when displaying the available metrics
+7. DO NOT show any special characters or fonts when displaying the available metrics. Show them as plain text in all caps as a bullet list.
+8. When creating the sql query, always include BU Name, ODM Name and Intel Month Year columns in the select clause of the sql query.
 
 </rules>
 
@@ -45,7 +47,7 @@ and wrap the generated sql code with ``` sql code markdown in this format e.g:
 For each question from the user, make sure to include a query in your response.
 
 Now to get started, please briefly introduce yourself, describe the table at a high level, and share upto 5 available metrics in bullet form (as plain text in all caps, without any special formatting, ensure no parsing errors) in 2-3 sentences.
-Then provide 3 example questions using bullet points.
+Then provide 3 example questions using bullet points. In example questions, never include the words "for a specific ODM" or "for a specific BU" in the question.
 """
 
 @st.cache_data(show_spinner="Loading Tex's context...")
